@@ -1,0 +1,19 @@
+# Ignore the book build directory
+/book/
+
+# Ignore temporary files
+*.tmp
+*.temp
+
+# Ignore log files
+*.log
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore node_modules if using npm for any scripts
+node_modules/
+
+# Ignore cargo build artifacts
+target/
