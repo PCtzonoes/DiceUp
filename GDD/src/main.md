@@ -1,4 +1,4 @@
-# Game Design Document: DiceUP RPG Lite
+# Mini GDD: DiceUP
 
 ## Game Overview
 
@@ -36,11 +36,14 @@ player is represented as a die, the battles are fought for NPCs they are rolling
 
 #### Battle System
 
-##### PvE Battles
-
-Each roll results in a battle for an RPG store NPC, with the player's die rolling on their behalf. The NPC will have a
-random Initiative value based on encounter difficulty. Players must roll higher than the NPC's value to win the battle,
+Each roll results in a PvE battle for an RPG store NPC, with the player's die rolling on their behalf. The NPC will have
+a random Initiative value based on encounter difficulty. Players must roll higher than the NPC's value to win the
+battle,
 providing the NPC with a chance to win as well. Encounter difficulty is influenced by the player's _Fame_ and _Luck_.
+
+PvP raids will be a showdown between two players, where the player with the highest roll over 3 turns wins, stealing
+resources from the opponent, based on how close they are from each other in the leaderboard, the closer the more they
+steal.
 
 ### Progression Systems
 
