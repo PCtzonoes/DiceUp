@@ -57,7 +57,7 @@ public class Dice : MonoBehaviour
             -transform.forward // Face 5
         };
 
-        var cubeScale = transform.localScale;
+        var  cubeScale = transform.localScale;
 
         // Define the corresponding center positions for each face
         var faceCenterPositions = new Vector3[]

@@ -26,9 +26,9 @@ public class DiceBox : MonoBehaviour
         Dice.Rb.rotation = DiceSpawnPoint.rotation;
         Dice.Rb.velocity = Vector3.zero;
         Dice.Rb.angularVelocity = Vector3.zero;
-        Dice.Rb.AddForce(transform.up * -2, ForceMode.Impulse);
-        Dice.Rb.AddForce(UnityEngine.Random.onUnitSphere * 2, ForceMode.Impulse);
-        Dice.Rb.AddTorque(UnityEngine.Random.insideUnitSphere * 10, ForceMode.Impulse);
+        Dice.Rb.AddForce(transform.up * -20 + Vector3.forward * 15, ForceMode.Impulse);
+        Dice.Rb.AddForce(UnityEngine.Random.onUnitSphere * 20, ForceMode.Impulse);
+        Dice.Rb.AddTorque(UnityEngine.Random.insideUnitSphere * 100, ForceMode.Impulse);
         _lastRollTime = DateTime.UtcNow;
     }
 
