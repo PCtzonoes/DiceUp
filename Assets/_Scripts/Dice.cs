@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -6,10 +8,12 @@ using UnityEngine.UI;
 public class Dice : MonoBehaviour
 {
     [SerializeField] Transform _spawnPoint;
-    [SerializeField] Text uiText;
+    [SerializeField] IntSO _diceResult;
+    [SerializeField] IntSO Luck;
 
+    private Coroutine _coroutine;
+    private bool _isRolling = false;
     private Rigidbody _rigidbody;
-    private bool _isRolling;
 
     public Rigidbody Rb => _rigidbody;
 
@@ -24,27 +28,39 @@ public class Dice : MonoBehaviour
         _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
 
+// Dice.cs
     public void Roll()
     {
+        _rigidbody.useGravity = true;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
+        _rigidbody.AddForce(transform.up * -20 + Vector3.forward * 15, ForceMode.Impulse);
+        _rigidbody.AddForce(UnityEngine.Random.onUnitSphere * 20, ForceMode.Impulse);
+        _rigidbody.AddTorque(UnityEngine.Random.insideUnitSphere * 100, ForceMode.Impulse);
         _isRolling = true;
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+        _coroutine = StartCoroutine(CheckVelocity());
     }
 
-    private void FixedUpdate()
+    private IEnumerator CheckVelocity()
     {
-        if (!_isRolling) return;
+        yield return new WaitForSeconds(1f);
 
-        if (_rigidbody.velocity.sqrMagnitude < 0.1f)
+        while (_isRolling)
         {
-            _isRolling = false;
-            _rigidbody.velocity = Vector3.zero;
-            _rigidbody.angularVelocity = Vector3.zero;
+            if (_rigidbody.velocity.sqrMagnitude < 0.1f)
+            {
+                Debug.Log("Dice stopped rolling");
+                _isRolling = false;
+                RollValue();
+            }
 
-            MoveSpawnPointToUpwardFace();
-            uiText.transform.position = _spawnPoint.position;
+            yield return null; // Check again in the next frame
         }
     }
 
-    private void MoveSpawnPointToUpwardFace()
+    private void RollValue()
     {
         // Define the local up vectors for each face of the dice
         var faceUpVectors = new Vector3[]
@@ -57,36 +73,22 @@ public class Dice : MonoBehaviour
             -transform.forward // Face 5
         };
 
-        var  cubeScale = transform.localScale;
-
-        // Define the corresponding center positions for each face
-        var faceCenterPositions = new Vector3[]
+        //find the top face then using luck value to improve the _diceResult
+        var maxDot = -1f;
+        var topFace = 0;
+        for (var i = 0; i < faceUpVectors.Length; i++)
         {
-            transform.position + transform.up * (cubeScale.y / 2), // Face 1
-            transform.position - transform.up * (cubeScale.y / 2), // Face 6
-            transform.position + transform.right * (cubeScale.x / 2), // Face 3
-            transform.position - transform.right * (cubeScale.x / 2), // Face 4
-            transform.position + transform.forward * (cubeScale.z / 2), // Face 2
-            transform.position - transform.forward * (cubeScale.z / 2) // Face 5
-        };
-
-        // Find the face whose local up vector is closest to the world up vector
-        float maxDot = -1f;
-        int upwardFaceIndex = -1;
-        for (int i = 0; i < faceUpVectors.Length; i++)
-        {
-            float dot = Vector3.Dot(faceUpVectors[i], Vector3.up);
+            var dot = Vector3.Dot(faceUpVectors[i], Vector3.up);
             if (dot > maxDot)
             {
                 maxDot = dot;
-                upwardFaceIndex = i;
+                topFace = i;
             }
         }
 
-        // Move the spawn point to the center of the upward face
-        if (upwardFaceIndex != -1)
-        {
-            _spawnPoint.position = faceCenterPositions[upwardFaceIndex];
-        }
+        Debug.Log($"Top face: {topFace + 1}");
+
+        _diceResult.Value = topFace + 1 + Luck.Value;
+        Debug.Log($"Dice result: {_diceResult.Value}");
     }
 }

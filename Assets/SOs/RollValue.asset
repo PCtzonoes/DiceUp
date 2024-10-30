@@ -10,7 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13e5b93e1bf64dd1a5a869aca6664e61, type: 3}
-  m_Name: Luck
+  m_Name: RollValue
   m_EditorClassIdentifier: 
   _value: 0
-  _defaultValue: 5

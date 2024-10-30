@@ -5,6 +5,8 @@ using Random = System.Random;
 
 public class DiceBox : MonoBehaviour
 {
+    [SerializeField] private IntSO _luck;
+    [SerializeField] private IntSO _enemyRoll;
     public Transform DiceSpawnPoint;
     public Dice Dice;
 
@@ -14,22 +16,17 @@ public class DiceBox : MonoBehaviour
     private void Start()
     {
         _lastRollTime = DateTime.UtcNow.AddSeconds(-2);
-        RollDice();
     }
 
     public void RollDice()
     {
         if (!CanRollDice) return;
 
-        Dice.Rb.useGravity = true;
+        _lastRollTime = DateTime.UtcNow;
         Dice.Rb.position = DiceSpawnPoint.position;
         Dice.Rb.rotation = DiceSpawnPoint.rotation;
-        Dice.Rb.velocity = Vector3.zero;
-        Dice.Rb.angularVelocity = Vector3.zero;
-        Dice.Rb.AddForce(transform.up * -20 + Vector3.forward * 15, ForceMode.Impulse);
-        Dice.Rb.AddForce(UnityEngine.Random.onUnitSphere * 20, ForceMode.Impulse);
-        Dice.Rb.AddTorque(UnityEngine.Random.insideUnitSphere * 100, ForceMode.Impulse);
-        _lastRollTime = DateTime.UtcNow;
+        Dice.Roll();
+        _enemyRoll.Value = _luck.Value + UnityEngine.Random.Range(1, 4);
     }
 
     private void FixedUpdate()

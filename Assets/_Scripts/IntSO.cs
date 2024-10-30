@@ -1,3 +1,4 @@
+using System;
 using Helper;
 using Helper.Events;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class IntSO : AGenericEventListener<int>
 {
     [SerializeField] private int _value;
+    [SerializeField] private int _defaultValue;
 
     public int Value
     {
@@ -16,4 +18,10 @@ public class IntSO : AGenericEventListener<int>
             InvokeActions(_value);
         }
     }
+
+    private void OnEnable()
+    {
+        Value = _defaultValue;
+    }
 }
+

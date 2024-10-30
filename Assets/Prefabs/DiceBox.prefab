@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf0e380cfaac46de83f48f03e16610c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _luck: {fileID: 11400000, guid: ffa55d4172d12478db94b04466635a34, type: 2}
+  _enemyRoll: {fileID: 11400000, guid: 6e940019de8ac42459f6b719589c00ff, type: 2}
   DiceSpawnPoint: {fileID: 718586221328822705}
   Dice: {fileID: 0}
 --- !u!1 &3295472316762553596

@@ -180,4 +180,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPoint: {fileID: 2546436745519236790}
-  uiText: {fileID: 0}
+  _diceResult: {fileID: 11400000, guid: 1bf6166b877684d3490ec823006a9120, type: 2}
+  Luck: {fileID: 11400000, guid: ffa55d4172d12478db94b04466635a34, type: 2}
