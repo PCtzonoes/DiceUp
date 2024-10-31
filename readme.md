@@ -2,7 +2,8 @@
 
 ## Overview
 
-Simple proof-of-concept using placeholder art and basic mechanics to demonstrate the core gameplay loop of the game.
+Simple proof-of-concept using placeholder art and basic mechanics to demonstrate the core gameplay loop of the game.  
+GDD: https://pctzonoes.github.io/DiceUp
 
 ## Deployment
 
